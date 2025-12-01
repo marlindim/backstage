@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { makeStyles, Theme, Grid, Paper } from '@material-ui/core';
 
 import { CatalogSearchResultListItem } from '@backstage/plugin-catalog';

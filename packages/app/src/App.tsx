@@ -1,3 +1,5 @@
+import * as React from 'react';
+import { githubAuthApiRef } from '@backstage/core-plugin-api';
 import { Navigate, Route } from 'react-router-dom';
 import { apiDocsPlugin, ApiExplorerPage } from '@backstage/plugin-api-docs';
 import {

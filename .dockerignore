@@ -1,8 +1,16 @@
-.git
-.yarn/cache
-.yarn/install-state.gz
 node_modules
-packages/*/src
-packages/*/node_modules
-plugins
-*.local.yaml
+*/node_modules
+**/node_modules
+dist-types
+*/dist-types
+**/dist-types
+.git
+.github
+*.log
+coverage
+.cache
+.DS_Store
+
+# allow backend dist
+!packages/backend/dist
+

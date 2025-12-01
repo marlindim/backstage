@@ -1,76 +1,39 @@
 app:
-  title: Scaffolded Backstage App
-  baseUrl: http://localhost:3000
+  title: Backstage
+  baseUrl: http://localhost:8080
 
 organization:
   name: My Company
 
 backend:
-  database:
-    client: pg
-    connection:
-      host: postgres
-      port: 5432
-      user: backstage
-      password: backstage
-      database: backstage
-
-  baseUrl: http://localhost:7000
+  baseUrl: http://localhost:7007
   listen:
     port: 7007
+    host: 0.0.0.0
   csp:
     connect-src: ["'self'", 'http:', 'https:']
   cors:
-    origin: http://localhost:3000
+    origin: http://localhost:8080
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
-
-integrations:
-  github:
-    - host: github.com
-      token: ${GITHUB_TOKEN}
-
-proxy:
-  # Uncomment and configure if you need proxy endpoints
-  # endpoints:
-  #   '/test':
-  #     target: 'https://example.com'
-  #     changeOrigin: true
-
-techdocs:
-  builder: 'local' # Alternatives - 'external'
-  generator:
-    runIn: 'docker' # Alternatives - 'local'
-  publisher:
-    type: 'local' # Alternatives - 'googleGcs' or 'awsS3'
+  database:
+    client: pg
+    connection:
+      host: ${POSTGRES_HOST}
+      port: ${POSTGRES_PORT}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+      database: ${POSTGRES_DB}
 
 auth:
+  environment: development
   providers:
-    guest: {}
-
-scaffolder:
-  # Configuration for software templates
+    guest:
+      dangerouslyAllowOutsideDevelopment: true
 
 catalog:
   import:
     entityFilename: catalog-info.yaml
-    pullRequestBranchName: backstage-integration
   rules:
     - allow: [Component, System, API, Resource, Location]
-  locations:
-    - type: file
-      target: ../../examples/entities.yaml
-    - type: file
-      target: ../../examples/template/template.yaml
-      rules:
-        - allow: [Template]
-    - type: file
-      target: ../../examples/org.yaml
-      rules:
-        - allow: [User, Group]
-
-kubernetes:
-  # Kubernetes configuration
-
-permission:
-  enabled: true
+  locations: []

@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: backstage
       POSTGRES_DB: backstage
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
@@ -33,16 +33,18 @@ services:
       postgres:
         condition: service_healthy
     restart: unless-stopped
+    container_name: backstage-backend
 
-  app:
+  frontend:
     build:
       context: .
       dockerfile: packages/app/Dockerfile
     ports:
-      - "3000:80"
+      - "8080:80"
     depends_on:
       - backend
     restart: unless-stopped
+    container_name: backstage-frontend
 
 volumes:
   postgres-data:

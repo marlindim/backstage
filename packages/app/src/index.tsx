@@ -1,3 +1,4 @@
+import * as React from 'react';
 import '@backstage/cli/asset-types';
 import ReactDOM from 'react-dom/client';
 import App from './App';

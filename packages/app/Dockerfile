@@ -10,9 +10,18 @@ RUN apt-get update && \
       git && \
     rm -rf /var/lib/apt/lists/*
 
-COPY . .
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn ./.yarn
+COPY packages packages
+COPY app-config.yaml ./
 
-RUN yarn install --immutable
+RUN mkdir -p plugins
+
+RUN yarn config set httpTimeout 600000
+
+RUN yarn install --immutable || \
+    yarn install --immutable || \
+    yarn install
 
 WORKDIR /app/packages/app
 
@@ -21,24 +30,7 @@ RUN yarn build
 FROM nginx:alpine
 
 COPY --from=builder /app/packages/app/dist /usr/share/nginx/html
-
-RUN echo 'server { \n\
-    listen 80; \n\
-    server_name localhost; \n\
-    root /usr/share/nginx/html; \n\
-    index index.html; \n\
-    location / { \n\
-        try_files $uri $uri/ /index.html; \n\
-    } \n\
-    location /api { \n\
-        proxy_pass http://backend:7007; \n\
-        proxy_http_version 1.1; \n\
-        proxy_set_header Upgrade $http_upgrade; \n\
-        proxy_set_header Connection "upgrade"; \n\
-        proxy_set_header Host $host; \n\
-        proxy_cache_bypass $http_upgrade; \n\
-    } \n\
-}' > /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

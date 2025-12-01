@@ -53,3 +53,9 @@ catalog:
       target: ./examples/org.yaml
       rules:
         - allow: [User, Group]
+techdocs:
+  builder: 'local'
+  publisher:
+    type: 'local'
+  storageUrl: http://localhost:7007/api/techdocs/static/docs
+
