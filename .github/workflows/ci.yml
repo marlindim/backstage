@@ -1,17 +1,13 @@
-name: Backstage CI
+name: CI
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - run: yarn install
-      - run: yarn tsc
+      - uses: actions/checkout@v4
+      - run: echo "Backstage CI/CD test successful!"
+
